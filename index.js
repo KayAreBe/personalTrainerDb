@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 const app = express()
 const port = 3000
 const db = require('./queries')
@@ -12,6 +13,7 @@ app.use(
     extended: true,
   })
 )
+app.use(cors()); 
 // Implement authentication middleware to protect routes
 function authenticate(req, res, next) {
   const token = req.headers.authorization;
@@ -68,7 +70,7 @@ app.post('/admin', db.createAdmin)
 app.put('/admin/:id', db.updateAdmin)
 app.delete('/admin/:id', db.deleteAdmin)
 
-app.post('/user/login', db.login)
+app.post('/admin/login', db.login)
 
 app.listen(port, () => {
   console.log(`App running on port ${port}.`)
